@@ -25,3 +25,6 @@ style = "Bold Italic"
 [font.italic]
 family = "JetBrainsMono Nerd Font"
 style = "Italic"
+
+[colors.primary]
+background = "#080808"
