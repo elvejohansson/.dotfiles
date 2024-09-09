@@ -1,11 +1,24 @@
+# Editor environment
+# All of these aren't strictly necessary, but let's be explicit in case someone doesn't fallback
+EDIT="$(command -v nvim 2>/dev/null || command -v vim)"
+export EDITOR=$EDIT
+export VISUAL=$EDITOR
+export GIT_EDITOR=$EDITOR
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Brew
+if [[ $(uname) == "Darwin" ]] then
+    export PATH="/opt/homebrew/bin:$PATH"
+    export PATH="/opt/homebrew/sbin:$PATH"
+    export PATH="/opt/homebrew/opt:$PATH"
+    export PATH="/opt/homebrew/include:$PATH"
+fi
+
 # colors
 autoload -Uz colors && colors
-
-# Options
-setopt autocd
-zle_highlight=('paste:none')
-stty stop undef
-unsetopt BEEP
 
 # history
 HISTSIZE=1000000
@@ -18,14 +31,7 @@ setopt HIST_SAVE_NO_DUPS
 setopt INC_APPEND_HISTORY
 setopt appendhistory
 
-# autocompletion
-autoload -Uz compinit
-zstyle ':completion:*' menu select
-zmodload zsh/complist
-compinit
-_comp_options+=(globdots)
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
+export HOMEBREW_NO_ANALYTICS=1
 
 # alias
 alias get-clusters="kubectl config get-contexts"
@@ -41,3 +47,5 @@ alias gs="git status"
 alias gd="git diff HEAD"
 alias gds="git diff HEAD --staged"
 alias gc="git commit"
+alias gl="git log"
+alias glo="git log --oneline"
