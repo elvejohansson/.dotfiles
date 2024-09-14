@@ -27,4 +27,5 @@ family = "JetBrainsMono Nerd Font"
 style = "Italic"
 
 [colors.primary]
-background = "#080808"
+background = "#121212"
+foreground = "#dedede"

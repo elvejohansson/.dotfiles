@@ -21,6 +21,11 @@ require("lazy").setup({
         "tpope/vim-sleuth",
 
         {
+            "mellow-theme/mellow.nvim",
+            lazy = false,
+            priority = 1000,
+        },
+        {
             "nvim-treesitter/nvim-treesitter",
             build = ":TSUpdate",
             opts = {
@@ -98,3 +103,5 @@ require("lazy").setup({
     },
     checker = { enabled = true },
 })
+
+vim.cmd([[colorscheme mellow]])
