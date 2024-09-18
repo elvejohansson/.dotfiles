@@ -72,12 +72,22 @@ require("lazy").setup({
             "mellow-theme/mellow.nvim",
             lazy = false,
             priority = 1000,
+            config = function()
+                vim.cmd([[colorscheme mellow]])
+            end
         },
         {
             "nvim-treesitter/nvim-treesitter",
             build = ":TSUpdate",
             opts = {
-                ensure_installed = { "c", "lua", "vimdoc", "json", "yaml" },
+                ensure_installed = {
+                    "c",
+                    "lua",
+                    "typescript",
+                    "php",
+                    "json",
+                    "yaml"
+                },
                 auto_install = true,
                 highlight = {
                     enable = true,
@@ -147,9 +157,92 @@ require("lazy").setup({
             "windwp/nvim-autopairs",
             event = "InsertEnter",
             config = true
+        },
+        {
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "neovim/nvim-lspconfig",
+        },
+        {
+            -- comp
+            "hrsh7th/nvim-cmp",
+            "hrsh7th/cmp-nvim-lsp",
+            -- snippet engine
+            "hrsh7th/cmp-vsnip",
+            "hrsh7th/vim-vsnip"
         }
     },
     checker = { enabled = true },
 })
 
-vim.cmd([[colorscheme mellow]])
+local cmp = require("cmp")
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+        end,
+    },
+    window = {},
+    mapping = cmp.mapping.preset.insert({
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true })
+    }),
+    sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "vsnip" },
+    }, {
+        { name = "buffer" },
+    })
+})
+
+require("mason").setup()
+
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+require("mason-lspconfig").setup({
+    -- trying to match this as close as possible to treesitter to get a good out-of-the-box setup
+    ensure_installed = {
+        "clangd",
+        "lua_ls",
+        "ts_ls",
+        "intelephense",
+        "jsonls",
+        "yamlls"
+    },
+    automatic_installation = true,
+    handlers = {
+        function(server_name)
+            require("lspconfig")[server_name].setup({
+                capabilities = capabilities
+            })
+        end,
+        ["lua_ls"] = function()
+            local lspconfig = require("lspconfig")
+            lspconfig.lua_ls.setup({
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = { "vim" }
+                        }
+                    }
+                }
+            })
+        end
+    }
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    callback = function(ev)
+        local opts = { buffer = ev.buf }
+
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+        vim.keymap.set("n", "gr", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "gf", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
+        vim.keymap.set("n", "gr", vim.lsp.buf.references)
+    end
+})
