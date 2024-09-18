@@ -170,7 +170,12 @@ require("lazy").setup({
             -- snippet engine
             "hrsh7th/cmp-vsnip",
             "hrsh7th/vim-vsnip"
-        }
+        },
+        {
+            "folke/lazydev.nvim",
+            ft = "lua",
+            opts = {},
+        },
     },
     checker = { enabled = true },
 })
@@ -217,18 +222,6 @@ require("mason-lspconfig").setup({
                 capabilities = capabilities
             })
         end,
-        ["lua_ls"] = function()
-            local lspconfig = require("lspconfig")
-            lspconfig.lua_ls.setup({
-                settings = {
-                    Lua = {
-                        diagnostics = {
-                            globals = { "vim" }
-                        }
-                    }
-                }
-            })
-        end
     }
 })
 
@@ -240,7 +233,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
         vim.keymap.set("n", "gf", vim.lsp.buf.code_action, opts)
         vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references)
