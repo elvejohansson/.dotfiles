@@ -1,9 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-
 vim.api.nvim_set_option_value("clipboard", "unnamed", {})
 
 vim.keymap.set("n", "<up>", "<nop>")
@@ -65,6 +62,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    checker = {
+        enabled = true,
+        notify = false,
+    },
     spec = {
         "tpope/vim-sleuth",
 
@@ -74,6 +75,9 @@ require("lazy").setup({
             priority = 1000,
             config = function()
                 vim.cmd([[colorscheme mellow]])
+
+                vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+                vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
             end
         },
         {
@@ -177,7 +181,6 @@ require("lazy").setup({
             opts = {},
         },
     },
-    checker = { enabled = true },
 })
 
 local cmp = require("cmp")
