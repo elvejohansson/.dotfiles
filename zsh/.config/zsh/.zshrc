@@ -25,6 +25,12 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 
+function _session() {
+    tmux-sessionizer
+}
+zle -N _session
+bindkey '^e' _session
+
 source "$ZDOTDIR/alias.zsh"
 
 source "$ZDOTDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

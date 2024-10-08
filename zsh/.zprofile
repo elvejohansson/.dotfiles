@@ -19,5 +19,10 @@ if [[ $(uname) == "Darwin" ]] then
     export PATH="/opt/homebrew/include:$PATH"
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
+
+# rust
+. "$HOME/.cargo/env"
+
 # move zsh files out of home folder
 ZDOTDIR="$XDG_CONFIG_HOME/zsh"
