@@ -137,14 +137,6 @@ require("lazy").setup({
             opts = {},
         },
         {
-            "lukas-reineke/virt-column.nvim",
-            opts = {
-                enabled = true,
-                char = "┃",
-                virtcolumn = "100",
-            },
-        },
-        {
             "f-person/git-blame.nvim",
             opts = {
                 enabled = true,
