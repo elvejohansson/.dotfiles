@@ -90,7 +90,8 @@ require("lazy").setup({
                     "typescript",
                     "php",
                     "json",
-                    "yaml"
+                    "yaml",
+                    "rust",
                 },
                 auto_install = true,
                 highlight = {
@@ -216,7 +217,8 @@ require("mason-lspconfig").setup({
         "ts_ls",
         "intelephense",
         "jsonls",
-        "yamlls"
+        "yamlls",
+        "rust_analyzer"
     },
     automatic_installation = true,
     handlers = {
