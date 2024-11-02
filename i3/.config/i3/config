@@ -4,15 +4,15 @@ set $mod Mod4
 # font for window titles + bar
 font pango:JetBrainsMono Nerd Font 9
 
+# set SE keymap
+exec_always "setxkbmap -model pc104 -layout se,us"
+
 # start XDG autostart .desktop files using dex
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
-# set SE keymap
-exec_always "setxkbmap -model pc104 -layout se,us"
-
 # start picom
-exec --no-startup-id picom -c --fade-in-step=1 --fade-out-step=1 --fade-delta=0
+exec_always --no-startup-id picom -c --fade-in-step=1 --fade-out-step=1 --fade-delta=0
 
 # set display stuff
 exec xrandr --output DP-4 --mode 1920x1080 --rate 144.00
@@ -34,6 +34,7 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 bindsym $mod+Shift+q kill
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # change focus
 bindsym $mod+h focus left
@@ -114,7 +115,7 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-#bar {
-#    status_command i3status
-#    position top
-#}
+bar {
+    status_command i3status
+    position top
+}
