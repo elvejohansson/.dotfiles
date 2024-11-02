@@ -20,6 +20,16 @@ zstyle ':completion:*' menu select
 _comp_options+=(globdots)
 zmodload zsh/complist
 
+# git
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats ' on branch %b'
+
+# prompt
+PROMPT='%~${vcs_info_msg_0_} » '
+
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
