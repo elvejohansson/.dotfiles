@@ -41,8 +41,6 @@ vim.opt.undofile = true
 
 vim.opt.scrolloff = 999
 
-vim.opt.signcolumn = "yes"
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -87,10 +85,6 @@ require("lazy").setup({
                 ensure_installed = {
                     "c",
                     "lua",
-                    "typescript",
-                    "php",
-                    "json",
-                    "yaml",
                     "rust",
                 },
                 auto_install = true,
@@ -142,13 +136,6 @@ require("lazy").setup({
                 enabled = true,
                 delay = 175,
             },
-        },
-        {
-            "nvim-lualine/lualine.nvim",
-            dependencies = {
-                "kyazdani42/nvim-web-devicons",
-            },
-            opts = {},
         },
         {
             "windwp/nvim-autopairs",
@@ -206,10 +193,6 @@ require("mason-lspconfig").setup({
     ensure_installed = {
         "clangd",
         "lua_ls",
-        "ts_ls",
-        "intelephense",
-        "jsonls",
-        "yamlls",
         "rust_analyzer"
     },
     automatic_installation = true,
